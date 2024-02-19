@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Note` MODIFY `pv` INTEGER NOT NULL DEFAULT 0;

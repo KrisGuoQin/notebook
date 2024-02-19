@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  avatar String
+  nickname String
+  mobile String @unique
+  desc String
+  password String
+  notes    Note[]
+}
+
+model Note {
+  id       String @id @default(uuid())
+  title    String @db.VarChar(255)
+  images   Json
+  content  String @db.MediumText
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  author   User @relation(fields: [authorId], references: [id])
+  authorId String 
+}
+
+model NoteDraft {
+  id       String @id @default(uuid())
+  title    String @db.VarChar(255)
+  images   Json
+  content  String @db.MediumText
+  createAt DateTime @default(now())
+  authorId String
+}
+
+model LikeRecord {
+  id String @id @default(uuid())
+  userId String
+  noteId String
+  createAt DateTime @default(now())
+}
+
+model BrowseRecord {
+  id String @id @default(uuid())
+  userId String
+  noteId String
+  createAt DateTime @default(now())
+}
+
+model FavoriteRecord {
+  id String @id @default(uuid())
+  userId String
+  noteId String
+  createAt DateTime @default(now())
+}

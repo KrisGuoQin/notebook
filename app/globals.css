@@ -18,16 +18,60 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+/* #root {
+  background-color: rgb(247, 249, 253);
+} */
+.feeds-page {
+  padding: 0 12px;
+}
+
+.feeds-page .feeds-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.note {
+  margin-bottom: 10px;
+  width: 170px;
+  flex: 0 0 170px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.note .thumb {
+  display: block;
+  width: 170px;
+  height: auto;
+}
+.note .thumb-container {
+  max-height: 170px;
+  overflow: hidden;
+}
+
+.note .footer {
+  padding: 12px;
+}
+
+.note .footer .title {
+  margin-bottom: 8px;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  color: rgb(51, 51, 51);
+}
+.avatar-container {
+  height: 40vh;
 }
