@@ -16,8 +16,8 @@ const tabs = [
     icon: <AppOutline />,
   },
   {
-    key: "/favorite",
-    title: "喜欢",
+    key: "/like",
+    title: "点赞",
     icon: <HeartOutline />,
   },
   {

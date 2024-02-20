@@ -2,7 +2,17 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import { LoginDialog } from "@/components/LoginForm";
+import type { Viewport } from 'next'
+import Script from "next/script";
 
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  width: 'device-width',
+}
 
 export const metadata: Metadata = {
   title: "notebook",
@@ -16,10 +26,10 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html lang="en" style={{fontSize: 14 }}>
       <body>
-        <div id="root" className="bg-slate-100">
-          <div className="content w-screen h-screen overflow-y-auto" >
+        <div id="root" className="bg-slate-50">
+          <div className="content w-screen h-dvh overflow-y-auto" >
             {children}
             <LoginDialog />
           </div>

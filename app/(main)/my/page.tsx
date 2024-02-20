@@ -13,6 +13,8 @@ interface Info {
   note: number;
   noteDraft: number;
   browse: number;
+  like: number;
+  favorite: number;
 }
 
 export default function My() {
@@ -22,7 +24,7 @@ export default function My() {
 
   const { data: info } = useRequest(
     async () => {
-      const response = await fetch("/api/my");
+      const response = await fetch("/api/my/info");
       const data = await processResponse(response);
       return data.data as Info;
     },
@@ -48,19 +50,34 @@ export default function My() {
         <List>
           <List.Item
             extra={info?.note && `${info.note}`}
-            onClick={() => info?.note && router.push("/note")}
+            onClick={() => router.push("/note")}
           >
             笔记
           </List.Item>
           <List.Item
             extra={info?.noteDraft && `${info.noteDraft}`}
-            onClick={() => info?.noteDraft && router.push("/note/draft")}
+            onClick={() => router.push("/note/draft")}
           >
             草稿
           </List.Item>
+
+          <List.Item
+            extra={info?.favorite && `${info.favorite}`}
+            onClick={() => router.push("/note/favorite")}
+          >
+            收藏
+          </List.Item>
+          
+          <List.Item
+            extra={info?.like && `${info.like}`}
+            onClick={() => router.push("/like")}
+          >
+            点赞
+          </List.Item>
+          
           <List.Item
             extra={info?.browse && `${info.browse}`}
-            onClick={() => info?.browse && router.push("/history")}
+            onClick={() => router.push("/note/history")}
           >
             足迹
           </List.Item>

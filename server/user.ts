@@ -4,7 +4,6 @@ import {
   encryptPwd,
   fail,
   success,
-  getUserFromToken,
   gerRandom,
 } from "@/utils";
 
@@ -51,7 +50,7 @@ export const addUser = async (data: { mobile: string; password: string }) => {
   }
 };
 
-// 获取用户
+// 登录获取用户
 export const getUser = async (data: { mobile: string; password: string }) => {
   const { mobile, password } = data;
   const result = userSchema.safeParse(data);
@@ -81,3 +80,20 @@ export const getUser = async (data: { mobile: string; password: string }) => {
 
   return success(user);
 };
+
+export const getUserById = async (id: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        nickname: true,
+        avatar: true,
+      }
+    })
+    return success(user)
+  } catch (error) {
+    return fail(500, error)
+  }
+}

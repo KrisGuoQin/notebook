@@ -29,6 +29,7 @@ model Note {
   updateAt DateTime @updatedAt
   author   User @relation(fields: [authorId], references: [id])
   authorId String 
+  isDeleted Boolean @default(false)
 }
 
 model NoteDraft {
@@ -52,6 +53,7 @@ model BrowseRecord {
   userId String
   noteId String
   createAt DateTime @default(now())
+  updateAt DateTime @default(now()) @updatedAt
 }
 
 model FavoriteRecord {

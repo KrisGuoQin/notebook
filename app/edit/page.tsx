@@ -125,14 +125,16 @@ export default function Edit() {
       onConfirm: async () => {
         const response = await fetch("/api/edit/draft", getConfig());
         await processResponse(response)
-        router.replace('/home');
+        router.back()
       },
     });
   };
 
   return (
     <div id="edit-page">
-      <NavBar onBack={handleBack} />
+      <NavBar onBack={handleBack} className="sticky top-0">
+        发布笔记
+      </NavBar>
       <div className="py-2">
         <ImageUploader
           value={fileList}

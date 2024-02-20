@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser, addUser } from "@/lib/server";
+import { getUser, addUser } from "@/server";
 import { generateToken, getUserFromToken, fail, success } from "@/utils";
 import cookie from "cookie";
 import { TOKEN_MAX_AGE } from "@/const";

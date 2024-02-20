@@ -2,17 +2,13 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { TOKEN_MAX_AGE } from "@/const";
+import { User } from "prisma/prisma-client";
 
 export interface CodeResult<T> {
   code: number;
   success: boolean;
   message?: string;
   data?: T;
-}
-
-export interface User {
-  id: string;
-  mobile: string;
 }
 
 export type Code = 400 | 401 | 403 | 404 | 500 | 1000;
@@ -112,4 +108,16 @@ export const gerRandom = (min: number, max: number) => {
   const difference = max - min + 1
   const random = Math.floor(difference * randomNumber)
   return random + 1
+}
+
+export const validateResult = (v: CodeResult<any> | CodeResult<any>[], errorMsg: string) => {
+  if (Array.isArray(v)) {
+    for (const item of v) {
+      if (item.code !== 0) {
+        throw Error(`[${errorMsg}]: ${item.message}`)
+      }
+    }
+  } else if (v.code !== 0) {
+    throw Error(`[${errorMsg}]: ${v.message}`)
+  }
 }
