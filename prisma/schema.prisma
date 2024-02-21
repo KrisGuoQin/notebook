@@ -23,8 +23,8 @@ model User {
 model Note {
   id       String @id @default(uuid())
   title    String @db.VarChar(255)
-  images   Json
-  content  String @db.MediumText
+  images   String? @db.MediumText
+  content  String? @db.MediumText
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
   author   User @relation(fields: [authorId], references: [id])

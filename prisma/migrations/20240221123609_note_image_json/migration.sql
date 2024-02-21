@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Note` MODIFY `images` MEDIUMTEXT NULL,
+    MODIFY `content` MEDIUMTEXT NULL;
