@@ -8,6 +8,8 @@ import {
   getNoteDraft,
   removeNoteDraft,
   type NoteParams,
+  type User,
+  type Note,
 } from "@/server";
 import { promisify } from "util";
 import imageSize from "image-size";
@@ -15,16 +17,11 @@ import { writeFile } from "fs/promises";
 import { cwd } from "node:process";
 import path from "path";
 import { omit } from "ramda";
-import type { User, Note } from "prisma/prisma-client";
 
 const sizeOf = promisify(imageSize);
 const removeDraftKey = omit(["draft"]);
 // const removeIdKey = omit(['id'])
 const removeDraftKeys = omit(["id", "draft"]);
-
-export const api = {
-  bodyParser: false,
-};
 
 export async function GET(req: NextRequest) {
   const user = await getUserFromToken();
@@ -106,7 +103,7 @@ const handleUpdateNote = async (data: any, user: User) => {
 
 const handleAddNote = async (data: any, user: User) => {
   const noteRes = await addNote({
-    ...removeDraftKeys<Note>(data),
+    ...removeDraftKeys<Note>(data) as any,
     authorId: user.id,
   });
 
@@ -117,7 +114,7 @@ const handleSaveDraft = async (req: NextRequest, user: User) => {
   const data = await req.json();
 
   const draft = await addNoteDraft({
-    ...removeDraftKeys<Note>(data),
+    ...removeDraftKeys<Note>(data) as any,
     authorId: user.id,
   });
 

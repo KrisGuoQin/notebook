@@ -2,7 +2,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { TOKEN_MAX_AGE } from "@/const";
-import { User } from "prisma/prisma-client";
+import type { User } from '@/server';
 
 export interface CodeResult<T> {
   code: number;
@@ -24,7 +24,7 @@ export const encryptPwd = (pwd: string) => {
   return password;
 };
 
-export const generateToken = (user: User) => {
+export const generateToken = (user: Omit<User, 'password'>) => {
   return jwt.sign({ user }, secretKey, { expiresIn: TOKEN_MAX_AGE * 1000 });
 };
 

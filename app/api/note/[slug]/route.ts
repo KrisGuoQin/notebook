@@ -16,7 +16,7 @@ import {
 } from "@/server";
 import { getUserFromToken, success, fail } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
-import type { User } from "prisma/prisma-client";
+import { type User } from '@/server';
 
 export async function GET(
   req: NextRequest,
@@ -149,7 +149,7 @@ const handleGetMyNotes = async (req: NextRequest, user: User) => {
 const handleGetMyDrafts = async (req: NextRequest, user: User) => {
   try {
     const result = await getMyNoteDrafts(user.id);
-    return Response.json({...result, data: result.data?.map(note => ({ note }))});
+    return Response.json({...result, data: result.data?.map((note: any) => ({ note }))});
   } catch (error) {
     return Response.json(fail(500, error));
   }

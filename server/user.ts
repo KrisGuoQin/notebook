@@ -14,6 +14,15 @@ const userSchema = z.object({
 
 const prisma = new PrismaClient({});
 
+export interface User {
+  id: string;
+  avatar: string;
+  nickname: string;
+  mobile: string;
+  desc: string;
+  password: string;
+}
+
 // 用户
 // 新建用户
 export const addUser = async (data: { mobile: string; password: string }) => {
@@ -42,6 +51,13 @@ export const addUser = async (data: { mobile: string; password: string }) => {
         nickname: mobile,
         desc: "来一段有趣的简介吧",
         password: encryptPwd(password),
+      },
+      select: {
+        id: true,
+        mobile: true,
+        avatar: true,
+        nickname: true,
+        desc: true,
       },
     });
     return success(user);

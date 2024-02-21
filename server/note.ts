@@ -1,8 +1,21 @@
 import { z } from "zod";
-import { type Note, PrismaClient } from "prisma/prisma-client";
+import { PrismaClient } from "prisma/prisma-client";
 import { fail, success, validateResult } from "@/utils";
 import { getNoteIsMyLike } from './my'
 import { JsonValue } from "@prisma/client/runtime/library";
+
+const prisma = new PrismaClient({});
+
+export interface Note {
+  id: string;
+  title: string;
+  images: string | null | JsonValue;
+  content: string;
+  createAt: Date;
+  updateAt: Date;
+  authorId: string;
+  isDeleted: boolean;
+}
 
 export const noteSchema = z.object({
   title: z.string(),
@@ -18,14 +31,12 @@ export interface NoteParams {
   authorId: string;
 }
 
-const prisma = new PrismaClient({});
-
 // 新建note
 export const addNote = async (data: {
   title: string;
   content: string;
   authorId: string;
-  images: JsonValue;
+  images: string;
 }) => {
   console.log("data", data);
   const result = noteSchema.safeParse(data);
@@ -35,7 +46,7 @@ export const addNote = async (data: {
 
   try {
     const note = await prisma.note.create({
-      data,
+      data: data as any,
     });
 
     return success<typeof note>(note);
@@ -129,7 +140,7 @@ export const updateNote = async (data: Note) => {
       where: {
         id: data.id,
       },
-      data,
+      data: data as any,
     });
 
     return success<typeof note>(note);
@@ -141,7 +152,7 @@ export const updateNote = async (data: Note) => {
 // Home页面-获取所有note
 export const getAllNotes = async ({ userId }: { userId?: string }) => {
   try {
-    const notes = await prisma.note.findMany({
+    const notes: any = await prisma.note.findMany({
       where: {
         isDeleted: false,
         authorId: {

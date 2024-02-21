@@ -1,7 +1,7 @@
 import { getMyCountInfo, getMyLikeNotes, getMyFavoriteNotes, getMyBrowseNotes } from "@/server";
 import { fail, getUserFromToken, success } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
-import { User } from "prisma/prisma-client";
+import { type User } from '@/server';
 
 export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   const user = await getUserFromToken();

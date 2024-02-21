@@ -2,12 +2,12 @@
 
 import NoteItem from "@/components/NoteItem";
 import { useRequest } from "ahooks";
-import type { Note, User } from "prisma/prisma-client";
 import { useProcessResponse } from "@/hooks";
 import { useEffect, type CSSProperties, ReactNode } from "react";
 import Empty from "./Empty";
 import { useAtom } from "jotai";
 import { userAtom } from "@/state";
+import type {  User, Note } from '@/server';
 
 export interface NoteType {
   note: Note & { author: User };
